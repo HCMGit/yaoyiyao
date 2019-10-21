@@ -1,0 +1,15 @@
+<!--pages/myOrder/myOrder.wxml-->
+<view class='container'>
+  <!-- 订单列表 -->
+  <block wx:for-items="{{carInfoData}}">
+    <view class='card  b-shadow' bindtap='joinRoom' id="{{item._id}}" data-hostId="{{item.hostId}}" data-lasttime="{{item.lasttime}}" > 
+      <view class='nearCard-fr'>
+        <view>名字：
+          <text class='c-green'>{{item.name}}</text>
+        </view>
+      </view>
+      
+    </view>
+    <button class="button-img" bindtap="roomRemove" id="{{item._id}}">删除</button>
+  </block>
+</view>

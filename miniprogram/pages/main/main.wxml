@@ -1,0 +1,38 @@
+
+<!--pages/myOrder/myOrder.wxml-->
+<view class='container'>
+  <!-- 订单列表 -->
+  <block wx:for-items="{{carInfoData}}">
+    <view class='card  b-shadow' bindtap='joinRoom' id="{{item._id}}" data-hostId="{{item.hostid}}" data-lasttime="{{item.lasttime}}" > 
+      <view class='nearCard-fr'>
+        <view>名字：
+          <text class='c-green'>{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+<!--button-->
+<view class="btn" bindtap="powerDrawer" data-statu="open">button</view>
+  
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+<!--content-->
+<!--使用animation属性指定需要执行的动画-->
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
+<form bindsubmit="formsubmit">
+ <!--drawer content-->
+ <view class="drawer_title">添加房间</view> 
+ <view class="drawer_content"> 
+  <view class="top grid"> 
+   <label class="title col-0">名字</label> 
+   <input class="input_base input_h30 col-1" name="name" value=""></input> 
+  </view> 
+  <view class="top bottom grid"> 
+   <label class="title col-0">摇动持续时间</label> 
+   <input class="input_base input_h30 col-1" name="time"></input> 
+  </view> 
+ </view> 
+ <button  class="btn_ok" form-type='submit' data-statu="close">确定</button> 
+</form>
+</view>
