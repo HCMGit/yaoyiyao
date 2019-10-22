@@ -5,8 +5,8 @@ const _ = db.command
 const MAX_LIMIT = 100
 exports.main = async (event, context) => {
   // 先取出集合记录总数
-  const countResult = await db.collection('roommenbers').where({
-    shake:0
+  const countResult = await db.collection(event.roomid).where({
+    
   }).count()
   const total = countResult.total
   // 计算需分几次取
@@ -14,8 +14,7 @@ exports.main = async (event, context) => {
   // 承载所有读操作的 promise 的数组
   const tasks = []
   for (let i = 0; i < batchTimes; i++) {
-    const promise = db.collection('roommenbers').where({
-     shake:0
+    const promise = db.collection(event.roomid).where({
     }
     ).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
     tasks.push(promise)

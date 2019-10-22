@@ -2,12 +2,12 @@
 .btn { 
   bottom: 0;
   position: fixed;
- width: 100%; 
+ width: 40%; 
  padding: 20rpx 0; 
  border-radius: 10rpx; 
  text-align: center; 
- margin: 0rpx 10%; 
- background: #000; 
+ margin: 0rpx 30%; 
+ background: rgb(0, 0, 0); 
  color: #fff; 
 } 
   

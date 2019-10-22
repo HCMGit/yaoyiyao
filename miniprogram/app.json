@@ -1,13 +1,12 @@
 {
   "pages": [
-    "pages/test/test",
+    "pages/getuser/getuser",
+    "pages/main/main",
     "pages/shake/shake",
-   "pages/main/main",
- "pages/my/my",
-   "pages/getuser/getuser",
-  
-   "pages/room/room",
-   
+    "pages/result/result",
+    "pages/test/test",
+    "pages/my/my",
+    "pages/room/room",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -15,6 +14,7 @@
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib"
+    
   ],
   "tabBar": {
     "backgroundColor": "#eeeeee",
@@ -26,7 +26,6 @@
         "iconPath": "images/goods.png",
         "selectedIconPath": "images/goods.png"
       },
-      
       {
         "pagePath": "pages/my/my",
         "text": "我的",

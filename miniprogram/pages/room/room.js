@@ -15,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.openid)
+    console.log(options.hostid)
       var that=this
       that.setData({
         roomid:options.roomid,
@@ -36,20 +36,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var starttime=new Date().getTime()
+    
     wx.cloud.callFunction({
       name: 'menberquery',
       data: {
-        shake:0
+        roomid:this.data.roomid
       },
       success: res => {
-        console.log(new Date().getTime()-starttime)
-        console.log(res)
         this.setData({
           menbers: res.result.data
         })
       },
       fail: err => {
+        console.log(err)
       },
       complete: () => {
 
@@ -57,12 +56,12 @@ Page({
     })
 
     const db = wx.cloud.database()
-    db.collection('roomstate').where({
+    db.collection('room').where({
       roomid: this.data.roomid 
     }).get({
       success: function (res) {
+        console.log(res)
         if(res.state){
-            ///开始
         }
       }
     })
@@ -72,11 +71,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    const db=wx.cloud.database()
+    /*const db=wx.cloud.database()
     db.collection("roommenbers").where({
       roomid:this.data.roomid,
       _openid:app.globalData.openid
-    }).remove()
+    }).remove()*/
   },
 
   /**
@@ -107,14 +106,19 @@ Page({
     
   },
   start:function(){
-    db.collection('roomstate').doc('roomid').update({
+    const db=wx.cloud.database()
+    db.collection('room').doc('roomid').update({
       // data 传入需要局部更新的数据
       data: {
         // 表示将 done 字段置为 true
         state: true
       }
     })
-      .then(console.log)
+      .then(
+        wx.navigateTo({
+          url: '../shake/shake?roomid='+this.data.roomid+"&lasttime="+this.data.lasttime,
+        })
+      )
       .catch(console.error)
   }
 

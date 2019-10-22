@@ -3,6 +3,7 @@
 App({
   globalData:({
     _openid:"",
+    nickname:'',
    userInfo:{},
    state:true,
    openid:''

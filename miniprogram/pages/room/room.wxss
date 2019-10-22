@@ -1,4 +1,7 @@
-
+.delete{
+   bottom: 0;
+  position: fixed;
+}
 .index {
 
   width: 100%;

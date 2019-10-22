@@ -83,7 +83,7 @@ Page({
   powerDrawer: function (e) {
     var currentStatu = e.currentTarget.dataset.statu;
     this.util(currentStatu)
-    console.log(e)
+    
   },
   util: function (currentStatu) {
     /* 动画部分 */
@@ -135,12 +135,24 @@ Page({
   } ,
   ///加入房间
   joinRoom:function(e){
-    console.log(e)
-     const db=wx.cloud.database()
-     db.collection('roommenbers').add({
+    const db = wx.cloud.database()
+    db.collection(e.currentTarget.id).where({
+      _openid:app.globalData.openid
+    }).get({
+      success: res => {
+        ////如果用户存在则直接跳转
+        if (res.data.length != 0) {
+          wx.navigateTo({
+            url: '/pages/room/room?roomid=' + e.currentTarget.id + '&hostid=' + e.currentTarget.dataset.hostid + '&lasttime=' + e.currentTarget.dataset.lasttime,
+          })
+        }
+        else{
+          ///如果用户不存则添加用户再跳转
+               const db=wx.cloud.database()
+    db.collection(e.currentTarget.id).add({
        data:{
          _openid:app.globalData._openid,
-         shake:0,
+         sum:0,
          userInfo:app.globalData.userInfo
        }
      }).then(res=>{
@@ -148,33 +160,43 @@ Page({
        url: '/pages/room/room?roomid=' + e.currentTarget.id + '&hostid=' + e.currentTarget.dataset.hostid+'&lasttime='+e.currentTarget.dataset.lasttime,
      })
      })
+        }
+      }
+      })
   },
  ///提交新建房间数据
 formsubmit:function(e){
-  console.log(e)
   this.util('close')
   const db=wx.cloud.database()
   db.collection('room').add({
     data:{
-    hostId:app.globalData.openid,
+    hostid:app.globalData.openid,
     lasttime:e.detail.value.time,
-    name:e.detail.value.name
+    name:e.detail.value.name,
+    state:false,
+    max_id:"0000"
     },
     success: res => {
+      console.log(res)
       // 在返回结果中会包含新创建的记录的 _id 
       wx.showToast({
          title: '新建房间成功',
         })
-        console.log(res)
-    const db=wx.cloud.database()
-        db.collection('roomstate').add({
-          data:{
-            roomId:res._id,
-            state:false,
-            max_id:'000000'
-          },
-          success:res=>{console.log(res)}
-        })
+       wx.cloud.callFunction({
+        name: 'createcollection',
+        data: {
+          roomid:res._id
+        },
+        success: res => {
+          console.log(res)
+        },
+        fail: err => {
+          console.log(err)
+        },
+        complete: () => {
+        }
+      })
+   
     }
   })
 }

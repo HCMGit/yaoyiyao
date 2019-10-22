@@ -1,0 +1,11 @@
+
+<view>
+<text>{{sum1}}</text>
+</view>
+<view>
+<text>{{sum2}}</text>
+</view>
+<view>
+<text>{{nickname}}</text>
+</view>
+<image  class="userinfo-avatar" src="{{avatarurl}}" background-size="cover"></image>
